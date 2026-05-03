@@ -17,18 +17,25 @@
   <!-- Main content -->
   <section class="content">
     <div class="row">
-      <!-- left column -->
       <div class="col-md-12">
-        <!-- general form elements -->
+
         <div class="box box-primary">
           <div class="box-header with-border">
             <h3 class="box-title">Form Tambah Jadwal</h3>
           </div>
-          <!-- /.box-header -->
 
-          <form method="POST" action="">
+          <!-- 🔥 TAMBAHAN ERROR GLOBAL -->
+          @if(session('error'))
+            <div class="alert alert-danger" style="margin:10px;">
+              {{ session('error') }}
+            </div>
+          @endif
+
+          <form method="POST" action="{{ url('admin/jadwal/tambah') }}">
             @csrf
+
             <div class="box-body">
+
               <div class="form-group">
                 <label>Ekstrakurikuler <span class="text-danger">*</span></label>
                 <select class="form-control" name="ekstrakurikuler_id" required>
@@ -56,24 +63,23 @@
 
               <div class="form-group">
                 <label>Jam <span class="text-danger">*</span></label>
-                <input type="time" name="jam" class="form-control" required placeholder="Contoh: 13.00 - 15.00" value="{{ old('jam') }}">
+                <input type="time" name="jam" class="form-control" required value="{{ old('jam') }}">
                 <div style="color:red">{{ $errors->first('jam') }}</div>
               </div>
+
             </div>
 
-            <!-- /.box-body -->
             <div class="box-footer">
               <button type="submit" class="btn btn-primary">Simpan</button>
             </div>
+
           </form>
+
         </div>
-        <!-- /.box -->
+
       </div>
-      <!--/.col -->
     </div>
-    <!-- /.row -->
   </section>
-  <!-- /.content -->
 </div>
 
 @endsection

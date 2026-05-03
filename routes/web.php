@@ -5,12 +5,10 @@ use App\Http\Controllers\AbsenPembinaController;
 use App\Http\Controllers\AbsenPembinaSiswaController;
 use App\Http\Controllers\AbsensiSiswaController;
 use App\Http\Controllers\AbsenSiswaController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DaftarController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DataSiswaController;
-use App\Http\Controllers\EkskulController;
 use App\Http\Controllers\EkstrakurikulerController;
 use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\JadwalPembinaController;
@@ -31,6 +29,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\SiswaNilaiController;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,10 +52,8 @@ Route::get('logout', [AuthController::class, 'logout']);
 Route::get('forgot-password', [AuthController::class, 'forgotpassword']);
 Route::post('forgot-password', [AuthController::class, 'PostForgotPassword']);
 
-
 Route::get('register', [RegisterController::class, 'showRegistrationForm']);
 Route::post('register', [RegisterController::class, 'register']);
-
 
 // Route untuk Admin
 Route::group(['middleware' => 'admin'], function () {
@@ -71,7 +68,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('admin/user/edit/{id}', [UserController::class, 'edit']);
     Route::post('admin/user/edit/{id}', [UserController::class, 'update']);
     Route::post('admin/user/delete/{id}', [UserController::class, 'delete']);
-    //siswa
+    // siswa
     Route::get('admin/siswa/index', [SiswaController::class, 'index']);
     Route::get('admin/siswa/tambah', [SiswaController::class, 'tambahsiswa']);
     Route::post('admin/siswa/tambah', [SiswaController::class, 'store']);
@@ -102,25 +99,24 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('admin/pembina/edit/{id}', [PembinaController::class, 'edit']);
     Route::post('admin/pembina/edit/{id}', [PembinaController::class, 'update']);
     Route::post('admin/pembina/delete/{id}', [PembinaController::class, 'delete']);
-    
 
-    //jadwal
+    // jadwal
     Route::get('admin/jadwal/index', [JadwalController::class, 'index']);
     Route::get('admin/jadwal/tambah', [JadwalController::class, 'tambahjadwal']);
     Route::post('admin/jadwal/tambah', [JadwalController::class, 'store']);
     Route::get('admin/jadwal/edit/{id}', [JadwalController::class, 'edit']);
     Route::post('admin/jadwal/edit/{id}', [JadwalController::class, 'update']);
-    Route::delete('admin/jadwal/delete/{id}', [JadwalController::class, 'delete']);
-    
-    //absen siswa
+    Route::post('admin/jadwal/delete/{id}', [JadwalController::class, 'delete']);
+
+    // absen siswa
     Route::get('admin/absen_siswa/index', [AbsenSiswaController::class, 'index']);
     Route::get('admin/absen_siswa/tambah', [AbsenSiswaController::class, 'tambahabsen']);
     Route::post('admin/absen_siswa/tambah', [AbsenSiswaController::class, 'store']);
     Route::get('admin/absen_siswa/edit/{id}', [AbsenSiswaController::class, 'edit']);
     Route::post('admin/absen_siswa/edit/{id}', [AbsenSiswaController::class, 'update']);
     Route::post('admin/absen_siswa/delete/{id}', [AbsenSiswaController::class, 'delete']);
-    
-    //absen pembina
+
+    // absen pembina
     Route::get('admin/absen_pembina/index', [AbsenPembinaController::class, 'index']);
     Route::get('admin/absen_pembina/tambah', [AbsenPembinaController::class, 'tambahabsen']);
     Route::post('admin/absen_pembina/tambah', [AbsenPembinaController::class, 'store']);
@@ -128,11 +124,11 @@ Route::group(['middleware' => 'admin'], function () {
     Route::post('admin/absen_pembina/edit/{id}', [AbsenPembinaController::class, 'update']);
     Route::post('admin/absen_pembina/delete/{id}', [AbsenPembinaController::class, 'delete']);
 
-    //verifikasi absen pembina
+    // verifikasi absen pembina
     Route::get('admin/absen_pembina/verifikasi/{id}', [AbsenPembinaController::class, 'verifikasi'])->name('absen_pembina.verifikasi');
     Route::put('admin/absen_pembina/verifikasi/{id}', [AbsenPembinaController::class, 'updateVerifikasi'])->name('absen_pembina.update_verifikasi');
 
-    //nilai siswa
+    // nilai siswa
     Route::get('admin/nilai_siswa/index', [NilaiSiswaController::class, 'index']);
     Route::get('admin/nilai_siswa/tambah', [NilaiSiswaController::class, 'tambahnilai']);
     Route::post('admin/nilai_siswa/tambah', [NilaiSiswaController::class, 'store']);
@@ -142,16 +138,12 @@ Route::group(['middleware' => 'admin'], function () {
     Route::post('admin/nilai_siswa/delete/{id}', [NilaiSiswaController::class, 'delete']);
     Route::get('admin/nilai_siswa/cetak/{id}', [NilaiSiswaController::class, 'cetak']);
 
-
-    
-
 });
 
-
-Route::group(['middleware'=>'siswa'], function () {
+Route::group(['middleware' => 'siswa'], function () {
     Route::get('siswa/dashboard', [DashboardController::class, 'dashboard']);
 
-    //pendaftaran
+    // pendaftaran
     Route::get('siswa/pendaftaran/index', [PendaftaranSiswaController::class, 'index']);
     Route::post('siswa/pendaftaran/store', [PendaftaranSiswaController::class, 'store']);
     Route::post('siswa/pendaftaran/delete/{id}', [PendaftaranSiswaController::class, 'delete']);
@@ -161,24 +153,24 @@ Route::group(['middleware'=>'siswa'], function () {
     // Route::get('siswa/pendaftaran/edit/{id}', [PendaftaranSiswaController::class, 'edit']);
     // Route::post('siswa/pendaftaran/edit/{id}', [PendaftaranSiswaController::class, 'update']);
     // Route::post('siswa/pendaftaran/delete/{id}', [PendaftaranSiswaController::class, 'delete']);
-    
-    //data siswa
+
+    // data siswa
     Route::get('siswa/siswa/index', [DataSiswaController::class, 'index']);
     Route::get('siswa/siswa/tambah', [DataSiswaController::class, 'tambahsiswa']);
     Route::post('siswa/siswa/tambah', [DataSiswaController::class, 'store']);
     Route::get('siswa/siswa/edit/{id}', [DataSiswaController::class, 'edit']);
     Route::post('siswa/siswa/edit/{id}', [DataSiswaController::class, 'update']);
     Route::post('siswa/siswa/delete/{id}', [DataSiswaController::class, 'delete']);
-    
-    //penjadwalan
+
+    // penjadwalan
     Route::get('siswa/jadwal/index', [JadwalSiswaController::class, 'index']);
     Route::get('siswa/jadwal/tambah', [JadwalSiswaController::class, 'tambahjadwal']);
     Route::post('siswa/jadwal/tambah', [JadwalSiswaController::class, 'store']);
     Route::get('siswa/jadwal/edit/{id}', [JadwalSiswaController::class, 'edit']);
     Route::post('siswa/jadwal/edit/{id}', [JadwalSiswaController::class, 'update']);
     Route::delete('siswa/jadwal/delete/{id}', [JadwalSiswaController::class, 'delete']);
-    
-    //absen siswa
+
+    // absen siswa
     Route::get('siswa/absen_siswa/index', [AbsensiSiswaController::class, 'index']);
     Route::post('siswa/absen_siswa/store', [AbsensiSiswaController::class, 'store']);
     // Route::get('siswa/absen_siswa/index', [AbsensiSiswaController::class, 'index']);
@@ -187,8 +179,8 @@ Route::group(['middleware'=>'siswa'], function () {
     // Route::get('siswa/absen_siswa/edit/{id}', [AbsensiSiswaController::class, 'edit']);
     // Route::post('siswa/absen_siswa/edit/{id}', [AbsensiSiswaController::class, 'update']);
     // Route::post('siswa/absen_siswa/delete/{id}', [AbsensiSiswaController::class, 'delete']);
-    
-    //nilai siswa
+
+    // nilai siswa
     Route::get('siswa/nilai_siswa/index', [SiswaNilaiController::class, 'index']);
     Route::get('siswa/nilai_siswa/tambah', [SiswaNilaiController::class, 'tambahnilai']);
     Route::post('siswa/nilai_siswa/tambah', [SiswaNilaiController::class, 'store']);
@@ -199,31 +191,31 @@ Route::group(['middleware'=>'siswa'], function () {
     Route::get('siswa/nilai_siswa/cetak/{id}', [SiswaNilaiController::class, 'cetak']);
 });
 
-Route::group(['middleware'=>'pembina'], function () {
+Route::group(['middleware' => 'pembina'], function () {
     Route::get('pembina/dashboard', [DashboardController::class, 'dashboard']);
 
-    //penjadwalan
+    // penjadwalan
     Route::get('pembina/jadwal/index', [JadwalPembinaController::class, 'index']);
     Route::get('pembina/jadwal/tambah', [JadwalPembinaController::class, 'tambahjadwal']);
     Route::post('pembina/jadwal/tambah', [JadwalPembinaController::class, 'store']);
     Route::get('pembina/jadwal/edit/{id}', [JadwalPembinaController::class, 'edit']);
     Route::post('pembina/jadwal/edit/{id}', [JadwalPembinaController::class, 'update']);
     Route::delete('pembina/jadwal/delete/{id}', [JadwalPembinaController::class, 'delete']);
-    //absen siswa
+    // absen siswa
     Route::get('pembina/absen_siswa/index', [AbsenPembinaSiswaController::class, 'index']);
     Route::get('pembina/absen_siswa/tambah', [AbsenPembinaSiswaController::class, 'tambahabsen']);
     Route::post('pembina/absen_siswa/tambah', [AbsenPembinaSiswaController::class, 'store']);
     Route::get('pembina/absen_siswa/edit/{id}', [AbsenPembinaSiswaController::class, 'edit']);
     Route::post('pembina/absen_siswa/edit/{id}', [AbsenPembinaSiswaController::class, 'update']);
     Route::post('pembina/absen_siswa/delete/{id}', [AbsenPembinaSiswaController::class, 'delete']);
-    //absen pembina
+    // absen pembina
     Route::get('pembina/absen_pembina/index', [AbsenKhususPembinaController::class, 'index']);
     Route::get('pembina/absen_pembina/tambah', [AbsenKhususPembinaController::class, 'tambahabsen']);
     Route::post('pembina/absen_pembina/tambah', [AbsenKhususPembinaController::class, 'store']);
     Route::get('pembina/absen_pembina/edit/{id}', [AbsenKhususPembinaController::class, 'edit']);
     Route::post('pembina/absen_pembina/edit/{id}', [AbsenKhususPembinaController::class, 'update']);
     Route::post('pembina/absen_pembina/delete/{id}', [AbsenKhususPembinaController::class, 'delete']);
-    //nilai siswa
+    // nilai siswa
     Route::get('pembina/nilai_siswa/index', [MenilaiPembinaController::class, 'index']);
     Route::get('pembina/nilai_siswa/tambah', [MenilaiPembinaController::class, 'tambahnilai']);
     Route::post('pembina/nilai_siswa/tambah', [MenilaiPembinaController::class, 'store']);
@@ -234,16 +226,16 @@ Route::group(['middleware'=>'pembina'], function () {
     Route::get('pembina/nilai_siswa/cetak/{id}', [MenilaiPembinaController::class, 'cetak']);
 
 });
-Route::group(['middleware'=>'kasekolah'], function () {
+Route::group(['middleware' => 'kasekolah'], function () {
     Route::get('kasekolah/dashboard', [DashboardController::class, 'dashboard']);
 
-    //data siswa
-     Route::get('kasekolah/siswa/index', [KepalaSiswaController::class, 'index']);
-    //penjadwalan
+    // data siswa
+    Route::get('kasekolah/siswa/index', [KepalaSiswaController::class, 'index']);
+    // penjadwalan
     Route::get('kasekolah/pendaftaran/index', [KepalaDaftarController::class, 'index']);
-    //absen siswa
+    // absen siswa
     Route::get('kasekolah/ekskul/index', [KepalaEkskulController::class, 'index']);
-    //nilai siswa
+    // nilai siswa
     Route::get('kasekolah/pembina/index', [KepalaPembinaController::class, 'index']);
 
     Route::get('kasekolah/jadwal/index', [KepalaJadwalController::class, 'index']);

@@ -8,10 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Siswa extends Model
 {
     use HasFactory;
-    protected $table='siswa';
+
+    protected $table = 'siswa';
 
     public function ekstrakurikuler()
     {
-        return $this->belongsTo(\App\Models\Ekstrakurikuler::class);
+        return $this->belongsTo(Ekstrakurikuler::class, 'ekstrakurikuler_id', 'id');
     }
 }

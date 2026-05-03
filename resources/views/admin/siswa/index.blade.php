@@ -13,7 +13,7 @@
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
         <li><a href="#"></a>Data Siswa</li>
-        
+
       </ol>
     </section>
 
@@ -27,14 +27,14 @@
               <h3 class="box-title">Data Siswa</h3>
               <a href="{{ url('admin/siswa/tambah') }}" class="btn btn-primary pull-right"><b>Tambah Siswa</b></a>
             </div>
-            
+
             <!-- /.box-header -->
             <div class="box-body">
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
                 <tr>
                   <th>No</th>
-                  
+
                   <th>NISN</th>
                   <th>Nama Lengkap</th>
                   <th>Kelas</th>
@@ -44,12 +44,13 @@
                 </thead>
                 <tbody>
                   @foreach ($siswa as $data )
+                  {{-- {{ dd($data) }} --}}
                     <tr>
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $data->nis }}</td>
                     <td>{{ $data->nama }}</td>
                     <td>{{ $data->kelas }}</td>
-                    <td>{{ $data->ekstrakurikuler->nama ?? '-' }}</td>
+                    <td>{{ optional($data->ekstrakurikuler)->nama ?? '-' }}</td>
                     <td>
                       <a href="{{ url('admin/siswa/edit/'.$data->id) }}" class="btn btn-sm btn-info">
                         <i class="fa fa-edit"></i>
@@ -63,7 +64,7 @@
                     </td>
                   </tr>
                   @endforeach
-                  
+
                 </tbody>
               </table>
             </div>
